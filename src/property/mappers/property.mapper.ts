@@ -7,6 +7,7 @@ export class PropertyMapper {
       id: property.id,
       title: property.title,
       enabled: property.enabled,
+      price: property.price,
     };
   }
 
