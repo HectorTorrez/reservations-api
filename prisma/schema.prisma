@@ -44,6 +44,8 @@ model Reservation {
   updatedAt  DateTime @updatedAt
   property   Property @relation(fields: [propertyId], references: [id])
   user       User     @relation(fields: [userId], references: [id])
+  enabled    Boolean  @default(true)
+  days       Int      @default(0)
 }
 
 model Review {
