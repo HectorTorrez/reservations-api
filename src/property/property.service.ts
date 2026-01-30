@@ -38,10 +38,11 @@ export class PropertyService {
     });
   }
 
-  findOne(id: number) {
-    return this.prisma.property.findUnique({
+  async findOne(id: number) {
+    const response = await this.prisma.property.findUnique({
       where: { id },
     });
+    return response ? PropertyMapper.toResponse(response) : response;
   }
 
   update(id: number, updatePropertyDto: UpdatePropertyDto) {
