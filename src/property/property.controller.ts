@@ -7,11 +7,13 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { PropertyService } from './property.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { PropertyFilterDto } from './dto/filters.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('property')
@@ -24,8 +26,8 @@ export class PropertyController {
   }
 
   @Get()
-  findAll() {
-    return this.propertyService.findAll();
+  findAll(@Query() query: PropertyFilterDto) {
+    return this.propertyService.findAll(query);
   }
 
   @Get(':id')

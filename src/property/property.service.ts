@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { Property } from '@prisma/client';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PropertyMapper } from './mappers/property.mapper';
+import { PropertyFilterDto } from './dto/filters.dto';
+import {
+  PaginationService,
+  PaginationDelegate,
+} from 'src/common/pagination/pagination.service';
+
 @Injectable()
 export class PropertyService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private paginationService: PaginationService,
+  ) {}
 
   async create(createPropertyDto: CreatePropertyDto) {
     const response = await this.prisma.property.create({
@@ -14,9 +24,17 @@ export class PropertyService {
     return PropertyMapper.toResponse(response);
   }
 
-  findAll() {
-    return this.prisma.property.findMany({
-      where: { enabled: true },
+  async findAll(query: PropertyFilterDto) {
+    return this.paginationService.paginateFromFilter(query, {
+      delegate: this.prisma.property as PaginationDelegate<Property>,
+      buildWhere: (q) => ({
+        enabled: true,
+        price: {
+          gte: q.minPrice ? Number(q.minPrice) : undefined,
+          lte: q.maxPrice ? Number(q.maxPrice) : undefined,
+        },
+      }),
+      map: (items) => PropertyMapper.toResponseList(items),
     });
   }
 

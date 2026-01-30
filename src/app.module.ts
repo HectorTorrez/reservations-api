@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { PropertyModule } from './property/property.module';
+import { PaginationModule } from './common/pagination/pagination.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PropertyModule } from './property/property.module';
       envFilePath: '.env',
     }),
     PrismaModule,
+    PaginationModule,
     PropertyModule,
   ],
   controllers: [AppController],
