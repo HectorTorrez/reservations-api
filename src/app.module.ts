@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { PropertyModule } from './property/property.module';
 import { PaginationModule } from './common/pagination/pagination.module';
+import { ReservationModule } from './reservation/reservation.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { PaginationModule } from './common/pagination/pagination.module';
     PrismaModule,
     PaginationModule,
     PropertyModule,
+    ReservationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
