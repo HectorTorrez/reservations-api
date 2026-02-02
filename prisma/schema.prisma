@@ -46,15 +46,18 @@ model Reservation {
   user       User     @relation(fields: [userId], references: [id])
   enabled    Boolean  @default(true)
   days       Int      @default(0)
+  reviews      Review[]
 }
 
 model Review {
   id         Int      @id @default(autoincrement())
-  rating     Int      @default(0)
+  rating     Int      @default(0) @db.SmallInt()
   comment    String?
   userId     Int
   propertyId Int
+  reservationId Int
   createdAt  DateTime @default(now())
   property   Property @relation(fields: [propertyId], references: [id])
   user       User     @relation(fields: [userId], references: [id])
+  reservation Reservation @relation(fields: [reservationId], references: [id])
 }

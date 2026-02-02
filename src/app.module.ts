@@ -8,6 +8,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { PropertyModule } from './property/property.module';
 import { PaginationModule } from './common/pagination/pagination.module';
 import { ReservationModule } from './reservation/reservation.module';
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ReservationModule } from './reservation/reservation.module';
     PaginationModule,
     PropertyModule,
     ReservationModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],
